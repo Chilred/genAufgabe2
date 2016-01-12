@@ -121,4 +121,15 @@ public class Genom {
         
         this.geneList = newGeneList;
     }
+    
+    public Gene getBestFitness(){
+        this.updateFitness();
+        return this.geneList[geneList.length-1];
+    }
+    
+     public void updateFitness() {
+        for (int i = 0; i < this.geneList.length; i++) {
+            geneList[i].updateFitness();
+        }
+    }
 }
