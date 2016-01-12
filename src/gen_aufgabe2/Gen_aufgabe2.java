@@ -25,8 +25,7 @@ public class Gen_aufgabe2 {
         
         
         Map map = new Map(path,filename);
-        
-//        Genom genome = new GenomeList(gencnt, genlen, initrate);
+
         Gene gene1 = new Gene(genlen, map);
         gene1.fillFitness();
         gene1.updateFitness();
@@ -34,6 +33,9 @@ public class Gen_aufgabe2 {
         Gene gene2 = new Gene(genlen, map);
         gene2.fillFitness();
         gene2.updateFitness();   
+        
+        gene1.printGene();
+        gene2.printGene();
         
         gene1.greddyCrossover(gene2);
     }

@@ -46,7 +46,7 @@ public class Map {
                 int x = 0;
                 for (int i = 0; i < line.length; i++) {
                     if (!line[i].equals("")) {
-                        if (!line[i].equals("0")) {
+                        if (!line[i].equals("0") && !line[i].equals("00")) {
                             int[] temp = new int[3];
                             temp[0] = Integer.valueOf(line[i]);
                             temp[1] = x;
@@ -75,7 +75,6 @@ public class Map {
 
     private double[][] distanceArray(ArrayList<int[]> citys) {
         double[][] distance = new double[citys.size()+1][citys.size()+1];
-       
         for (int i = 0; i < citys.size(); i++) {
             distance[0][i] = -1;
             distance[i][0] = -1;
@@ -96,9 +95,9 @@ public class Map {
     }
     
     private void printMap(ArrayList<int[]> citys, double[][] distanceArray){
-        for (int[] temp : citys) {
-            System.out.println(temp[1] + " " + temp[2] + " = " + temp[0]);
-        }
+//        for (int[] temp : citys) {
+//            System.out.println(temp[1] + " " + temp[2] + " = " + temp[0]);
+//        }
         for (int i = 0; i < distanceArray.length; i++) {
             for (int j = 0; j < distanceArray.length; j++) {
                 System.out.print(distanceArray[i][j] + " ");
@@ -106,6 +105,10 @@ public class Map {
             }
             System.out.println("");
         }      
+    }
+    
+    public int getCountOfCities(){
+        return distanceArray.length-1;
     }
     
     public double getDistance(int pos, int end) {
