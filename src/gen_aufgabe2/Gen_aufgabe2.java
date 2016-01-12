@@ -21,23 +21,43 @@ public class Gen_aufgabe2 {
         String filename = "05-map-10x10-36border.txt";
         int gencnt = 100;
         int genlen = 36;
-        double initrate = 0.5;
-        
+
+        double pc = 0;
+        double pcEnd = 0.9;
+        double pcStep = 0.05;
+        double pm = 0;
+        double pmEnd = 0.2;
+        double pmStep = 0.005;
+        int max_generation = 100;
+        boolean protection = false;
         
         Map map = new Map(path,filename);
+//
+//        Gene gene1 = new Gene(genlen, map);
+//        gene1.fillFitness();
+//        gene1.updateFitness();
+//   
+//        Gene gene2 = new Gene(genlen, map);
+//        gene2.fillFitness();
+//        gene2.updateFitness();   
+//        
+//        gene1.printGene();
+//        gene2.printGene();
+//        
+//        gene1.greddyCrossover(gene2);
+        
+        long startTime = System.currentTimeMillis();
+        int maxRun = 10;
+        for (double i = pc; i < pcEnd; i += pcStep) {
+            for (double j = pm; j < pmEnd; j += pmStep) {
+                Run run = new Run(maxRun, i, j, gencnt, genlen, max_generation, protection);
+            }
 
-        Gene gene1 = new Gene(genlen, map);
-        gene1.fillFitness();
-        gene1.updateFitness();
-   
-        Gene gene2 = new Gene(genlen, map);
-        gene2.fillFitness();
-        gene2.updateFitness();   
+        }
+         long endTime = System.currentTimeMillis();
+        long totalTime = endTime - startTime;       
         
-        gene1.printGene();
-        gene2.printGene();
         
-        gene1.greddyCrossover(gene2);
     }
     
      public static double getRandomDouble() {

@@ -132,4 +132,16 @@ public class Genom {
             geneList[i].updateFitness();
         }
     }
+     
+    public boolean maxFitnessReached(){
+        boolean reached = false;
+        for (int i = 0; i < this.geneList.length; i++) {
+            geneList[i].updateFitness();
+            if (this.geneList[i].getFitness() == this.genlen) {
+                reached = true;
+                break;
+            }
+        }
+        return reached;
+    }
 }
