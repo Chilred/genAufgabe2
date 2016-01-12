@@ -42,7 +42,7 @@ public class Genom {
         double end = genlen * gencnt * pm;
         for (int i = 0; i < end; i++) {
             int geneId = getRandomInt(genlen);
-            if (this.best_protection && geneId == 0) {
+            if (this.best_protection && geneId == this.geneList.length-1) {
                 continue;
             }
             int pos = getRandomInt(genlen);
@@ -51,7 +51,7 @@ public class Genom {
     }
     
     public void greedyCrossover(double pc){
-        Arrays.sort(geneList);
+        //Arrays.sort(geneList);
         Gene[] newGeneList = new Gene[this.gencnt];
         int end = (int)(gencnt*pc);
         int count = 0;
@@ -88,8 +88,9 @@ public class Genom {
     }
     
     public void replicate50Best(){
-        Gene best1 = new Gene(this.genlen, this.map);
-        Gene best2 = new Gene(this.genlen, this.map);
+        Arrays.sort(geneList);
+        Gene best1 = this.geneList[this.gencnt-1];
+        Gene best2 = this.geneList[this.gencnt-2];
         
         Gene[] newGeneList = new Gene[this.gencnt];
         int count = 0;

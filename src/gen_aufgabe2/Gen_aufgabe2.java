@@ -28,8 +28,9 @@ public class Gen_aufgabe2 {
         double pm = 0;
         double pmEnd = 0.2;
         double pmStep = 0.005;
-        int max_generation = 100;
+        int max_generation = 100; //1000
         boolean protection = false;
+        int maxRun = 10; //50
         
         Map map = new Map(path,filename);
 //
@@ -47,17 +48,16 @@ public class Gen_aufgabe2 {
 //        gene1.greddyCrossover(gene2);
         
         long startTime = System.currentTimeMillis();
-        int maxRun = 10;
+        String result = "";
         for (double i = pc; i < pcEnd; i += pcStep) {
             for (double j = pm; j < pmEnd; j += pmStep) {
                 Run run = new Run(maxRun, i, j, gencnt, genlen, max_generation, protection);
+                result = result + run.getAverageGeneration();
             }
-
+            result = result + "\r\n";
         }
          long endTime = System.currentTimeMillis();
-        long totalTime = endTime - startTime;       
-        
-        
+        long totalTime = endTime - startTime;               
     }
     
      public static double getRandomDouble() {
