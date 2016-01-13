@@ -19,14 +19,15 @@ public class Gene {
     private boolean protectGene = false;
     private double fitness;
     private Map map;
+    private int genlen;
 
     public Gene(int genlen, Map map) {
+        this.genlen = genlen;
         value = new int[genlen];
         this.map = map;
         for (int i = 0; i < value.length; i++) {
             value[i] = i;
         }
-        //this.printGene();
     }
 
     public void setProtectGene(Boolean status) {
@@ -43,8 +44,7 @@ public class Gene {
 
     public void updateFitness() {
         double fit = 0;
-        for (int i = 1; i < this.value.length; i++) {
-//            System.out.println("i: " + i + "= " + this.value[i-1] + " " + this.value[i]);
+        for (int i = 1; i < this.genlen; i++) {
             fit = fit + this.map.getDistance(this.value[i - 1] + 1, this.value[i] + 1);
         }
         fit = fit + this.map.getDistance(this.value[this.value.length - 1] + 1, this.value[0] + 1);
@@ -99,20 +99,20 @@ public class Gene {
                 double getDistance2 = this.map.getDistance(currentPos+1, posCity2+1);
 
                 if (getDistance1 < getDistance2) {
-                    if (!checkAlreadyUsed(child, i-1)) {
+                    if (!checkAlreadyUsed(child, i-1, posCity1)) {
                         child.value[i] = gene2.value[posCity2];
                     } else {
-                        if (!checkAlreadyUsed(child, i-1)) {
+                        if (!checkAlreadyUsed(child, i-1, posCity2)) {
                             child.value[i] = this.value[posCity1];
                         } else {
                             child.value[i] = getUnusedPos(child, i);
                         }
                     }
                 } else {
-                    if (!checkAlreadyUsed(child, i-1)) {
+                    if (!checkAlreadyUsed(child, i-1, posCity1)) {
                         child.value[i] = this.value[posCity1];
                     } else {
-                        if (!checkAlreadyUsed(child, i-1)) {
+                        if (!checkAlreadyUsed(child, i-1, posCity1)) {
                             child.value[i] = gene2.value[posCity1];
                         } else {
                             child.value[i] = getUnusedPos(child, i);
@@ -121,8 +121,14 @@ public class Gene {
                 }
             } else {
                 if (posCity1 == -1) {
-                    if (!checkAlreadyUsed(child, -1)) {
+                    if (!checkAlreadyUsed(child, -1, posCity1)) {
                         child.value[i] = posCity1;
+                    } else {
+                        child.value[i] = getUnusedPos(child, i);
+                    }
+                } else if (posCity1 == -1) {
+                    if (!checkAlreadyUsed(child, -1, posCity2)) {
+                        child.value[i] = posCity2;
                     } else {
                         child.value[i] = getUnusedPos(child, i);
                     }
@@ -151,10 +157,10 @@ public class Gene {
         return pos;
     }
 
-    public boolean checkAlreadyUsed(Gene g, int pos) {
+    public boolean checkAlreadyUsed(Gene g, int pos, int usedCityPos) {
         boolean check;
         for (int i = 0; i < g.value.length; i++) {
-            if (g.value[i] == pos) {
+            if (g.value[i] == usedCityPos) {
                 return true;
             }
         }

@@ -25,11 +25,13 @@ public class Genom {
         this.gencnt = gencnt;
         this.map = map;
         this.genlen = this.map.getCountOfCities();
+        this.geneList = new Gene[this.gencnt];
 
-        for (int i = 0; i < gencnt; i++) {
-            this.geneList[i] = new Gene(this.gencnt, map);
+        for (int i = 1; i < gencnt; i++) {
+            this.geneList[i] = new Gene(this.genlen, map);
             this.geneList[i].fillFitness();
             this.geneList[i].updateFitness();
+            this.geneList[i].printGene();
         }
     }
 

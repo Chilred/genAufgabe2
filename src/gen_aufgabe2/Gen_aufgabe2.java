@@ -25,7 +25,7 @@ public class Gen_aufgabe2 {
     static double pmStep = 0.005;
     static int max_generation = 100; //1000
     static boolean protection = false;
-    static int maxRun = 10; //50
+    static int maxRun = 1; //50
         
     /**
      * @param args the command line arguments
@@ -33,18 +33,20 @@ public class Gen_aufgabe2 {
     public static void main(String[] args) {
 //
         Map map = new Map(path,filename);
-        Gene gene1 = new Gene(genlen, map);
-        gene1.fillFitness();
-        gene1.updateFitness();
-   
-        Gene gene2 = new Gene(genlen, map);
-        gene2.fillFitness();
-        gene2.updateFitness();   
-        
-        gene1.printGene();
-        gene2.printGene();
-        
-        gene1.greddyCrossover(gene2);
+//        Gene gene1 = new Gene(genlen, map);
+//        gene1.fillFitness();
+//        gene1.updateFitness();
+//   
+//        Gene gene2 = new Gene(genlen, map);
+//        gene2.fillFitness();
+//        gene2.updateFitness();   
+//        
+//        gene1.printGene();
+//        gene2.printGene();
+//        
+//        gene1.greddyCrossover(gene2);
+       
+          Genom genome = new Genom(gencnt, map);
         
         long startTime = System.currentTimeMillis();
 //        Part1
