@@ -20,7 +20,7 @@ public class Gen_aufgabe2 {
     static double pc = 0;
     static double pcEnd = 0.9;
     static double pcStep = 0.05;
-    static double pm = 0;
+    static double pm = 0.5; // 0
     static double pmEnd = 0.2;
     static double pmStep = 0.005;
     static int max_generation = 100; //1000
@@ -32,22 +32,13 @@ public class Gen_aufgabe2 {
      */
     public static void main(String[] args) {
 //
-        Map map = new Map(path,filename);
-//        Gene gene1 = new Gene(genlen, map);
-//        gene1.fillFitness();
-//        gene1.updateFitness();
-//   
-//        Gene gene2 = new Gene(genlen, map);
-//        gene2.fillFitness();
-//        gene2.updateFitness();   
-//        
-//        gene1.printGene();
-//        gene2.printGene();
-//        
-//        gene1.greddyCrossover(gene2);
-       
-          Genom genome = new Genom(gencnt, map);
-        
+//        Map map = new Map(path, filename);
+//        Genom genome = new Genom(gencnt, map);
+//        genome.setProtection(protection);
+//        genome.greedyCrossover(pc);
+//        genome.mutate(pm);
+//        genome.replicate50Best();
+
         long startTime = System.currentTimeMillis();
 //        Part1
 //        Map map = new Map(path,filename);

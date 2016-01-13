@@ -27,11 +27,11 @@ public class Genom {
         this.genlen = this.map.getCountOfCities();
         this.geneList = new Gene[this.gencnt];
 
-        for (int i = 1; i < gencnt; i++) {
+        for (int i = 0; i < gencnt; i++) {
             this.geneList[i] = new Gene(this.genlen, map);
             this.geneList[i].fillFitness();
             this.geneList[i].updateFitness();
-            this.geneList[i].printGene();
+//            this.geneList[i].printGene();
         }
     }
 
@@ -40,7 +40,7 @@ public class Genom {
     }
 
     public void mutate(double pm) {
-        Arrays.sort(geneList);
+//        Arrays.sort(geneList);
         double end = genlen * gencnt * pm;
         for (int i = 0; i < end; i++) {
             int geneId = getRandomInt(genlen);
@@ -53,14 +53,18 @@ public class Genom {
     }
     
     public void greedyCrossover(double pc){
-        //Arrays.sort(geneList);
+//        updateFitness();
+//        Arrays.sort(geneList);
         Gene[] newGeneList = new Gene[this.gencnt];
         int end = (int)(gencnt*pc);
         int count = 0;
         
         if(this.best_protection){
+            updateFitness();
+            Arrays.sort(geneList);
             Gene newGene = new Gene(this.genlen, map);
-            System.arraycopy(this.geneList[0], 0, newGene.getValue(), 0, this.genlen);
+            //todo check ob richtig oder -1
+            System.arraycopy(this.geneList[geneList.length-1].value, 0, newGene.getValue(), 0, this.genlen);
             newGeneList[count] = newGene;
             count++;
         }       
@@ -82,14 +86,17 @@ public class Genom {
         end = this.gencnt - count;
         for (int i = 0; i < end; i++) {
             Gene newGene = new Gene(this.genlen, this.map);
-            int genepos1 = getRandomInt(this.geneList.length);
-            System.arraycopy(this.geneList[genepos1], 0, newGene.getValue(), 0, this.genlen);
+            int genepos1 = getRandomInt(this.gencnt);
+            System.arraycopy(this.geneList[genepos1].value, 0, newGene.value, 0, this.genlen);
+//            newGene.printGene();
             newGeneList[count] = newGene;
+            count++;
         }
         this.geneList = newGeneList;
     }
     
     public void replicate50Best(){
+        updateFitness();
         Arrays.sort(geneList);
         Gene best1 = this.geneList[this.gencnt-1];
         Gene best2 = this.geneList[this.gencnt-2];
@@ -97,19 +104,21 @@ public class Genom {
         Gene[] newGeneList = new Gene[this.gencnt];
         int count = 0;
         Gene newGene;
-        double length = (0.25 * this.gencnt);
+        double length = (int)(0.25 * this.gencnt);
         
         for (int i = 0; i < length; i++) {
             newGene = new Gene(this.genlen, this.map);
             System.arraycopy(best1.getValue(), 0, newGene.getValue(), 0, this.genlen);
             newGeneList[count] = newGene;
+            newGeneList[count].updateFitness();
             count++;
         }
         
         for (int i = 0; i < length; i++) {
             newGene = new Gene(this.genlen, this.map);
-            System.arraycopy(best2.getValue(), 0, newGene.getValue(), 0, this.genlen);
+            System.arraycopy(best2.getValue(), 0, newGene.value, 0, this.genlen);
             newGeneList[count] = newGene;
+            newGeneList[count].updateFitness();
             count++;
         }
         
@@ -117,11 +126,11 @@ public class Genom {
         for (int i = 0; i < end; i++) {
             newGene = new Gene(this.genlen, this.map);
             int genepos1 = getRandomInt(this.geneList.length);
-            System.arraycopy(this.geneList[genepos1], 0, newGene.getValue(), 0, this.genlen);
+            System.arraycopy(this.geneList[genepos1].value, 0, newGene.value, 0, this.genlen);
             newGeneList[count] = newGene;
+            newGeneList[count].updateFitness();
             count++;
         }
-        
         this.geneList = newGeneList;
     }
     
