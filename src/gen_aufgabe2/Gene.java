@@ -92,27 +92,27 @@ public class Gene {
         for (int i = 1; i < this.value.length; i++) {
             int currentPos = child.value[i-1];
             int posCity1 = getPosOfCity(currentPos, this.value);
-            int posCity2 = getPosOfCity(currentPos, gene2.value);
+            int posCity2 = getPosOfCity(currentPos, gene2.value); 
 
             if (posCity1 != -1 && posCity2 != -1) {
-                double getDistance1 = this.map.getDistance(currentPos+1, posCity1);
-                double getDistance2 = this.map.getDistance(currentPos+1, posCity2);
+                double getDistance1 = this.map.getDistance(currentPos+1, posCity1+1);
+                double getDistance2 = this.map.getDistance(currentPos+1, posCity2+1);
 
                 if (getDistance1 < getDistance2) {
-                    if (!checkAlreadyUsed(child, this.value[posCity1]-1)) {
+                    if (!checkAlreadyUsed(child, i-1)) {
                         child.value[i] = gene2.value[posCity2];
                     } else {
-                        if (!checkAlreadyUsed(child, this.value[posCity1]-1)) {
+                        if (!checkAlreadyUsed(child, i-1)) {
                             child.value[i] = this.value[posCity1];
                         } else {
                             child.value[i] = getUnusedPos(child, i);
                         }
                     }
                 } else {
-                    if (!checkAlreadyUsed(child, this.value[posCity2]-1)) {
+                    if (!checkAlreadyUsed(child, i-1)) {
                         child.value[i] = this.value[posCity1];
                     } else {
-                        if (!checkAlreadyUsed(child, this.value[posCity2]-1)) {
+                        if (!checkAlreadyUsed(child, i-1)) {
                             child.value[i] = gene2.value[posCity1];
                         } else {
                             child.value[i] = getUnusedPos(child, i);
@@ -121,7 +121,7 @@ public class Gene {
                 }
             } else {
                 if (posCity1 == -1) {
-                    if (!checkAlreadyUsed(child, this.value[posCity1])) {
+                    if (!checkAlreadyUsed(child, -1)) {
                         child.value[i] = posCity1;
                     } else {
                         child.value[i] = getUnusedPos(child, i);
@@ -148,7 +148,7 @@ public class Gene {
                 break;
             }
         }
-        return pos + 1;
+        return pos;
     }
 
     public boolean checkAlreadyUsed(Gene g, int pos) {

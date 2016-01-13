@@ -45,4 +45,8 @@ public class Run {
         System.out.println(pc + " " + pm + " " + averageGeneration);
         return (this.pc + " " + this.pm + " " + this.averageGeneration + "\r\n");
     }
+    
+    public double getAverGenDouble(){
+        return this.averageGeneration;
+    }
 }
