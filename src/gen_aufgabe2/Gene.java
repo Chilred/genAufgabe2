@@ -102,41 +102,41 @@ public class Gene implements Comparable<Gene>{
                 double getDistance2 = this.map.getDistance(currentPos+1, posCity2+1);
 
                 if (getDistance1 < getDistance2) {
-                    if (!checkAlreadyUsed(child, i-1, posCity1)) {
-                        child.value[i] = this.value[posCity1];
+                    if (!checkAlreadyUsed(child, posCity1)) {
+                        child.value[i] = posCity1;
                     } else {
-                        if (!checkAlreadyUsed(child, i-1, posCity2)) {
-                            child.value[i] = gene2.value[posCity2];
+                        if (!checkAlreadyUsed(child, posCity2)) {
+                            child.value[i] = posCity2;
                         } else {
-                            child.value[i] = getUnusedPos(child);
+                            child.value[i] = getUnusedPosRandom(child, i-1);
                         }
                     }
                 } else {
-                    if (!checkAlreadyUsed(child, i-1, posCity1)) {
-                        child.value[i] = gene2.value[posCity2];
+                    if (!checkAlreadyUsed(child, posCity1)) {
+                        child.value[i] = posCity2;
                     } else {
-                        if (!checkAlreadyUsed(child, i-1, posCity1)) {
-                            child.value[i] = this.value[posCity1];
+                        if (!checkAlreadyUsed(child, posCity1)) {
+                            child.value[i] = posCity1;
                         } else {
-                            child.value[i] = getUnusedPos(child);
+                            child.value[i] = getUnusedPosRandom(child, i-1);
                         }
                     }
                 }
             } else {
                 if (posCity1 != -1) {
-                    if (!checkAlreadyUsed(child, -1, posCity1)) {
-                        child.value[i] = this.value[posCity1];;
+                    if (!checkAlreadyUsed(child, posCity1)) {
+                        child.value[i] = posCity1;
                     } else {
-                        child.value[i] = getUnusedPos(child);
+                        child.value[i] = getUnusedPosRandom(child, i-1);
                     }
                 } else if (posCity2 != -1) {
-                    if (!checkAlreadyUsed(child, -1, posCity2)) {
-                        child.value[i] = gene2.value[posCity2];
+                    if (!checkAlreadyUsed(child, posCity2)) {
+                        child.value[i] = posCity2;
                     } else {
-                        child.value[i] = getUnusedPos(child);
+                        child.value[i] = getUnusedPosRandom(child, i-1);
                     }
                 } else {
-                    child.value[i] = getUnusedPos(child);
+                    child.value[i] = getUnusedPosRandom(child, i-1);
                 }
             }
         }
@@ -169,8 +169,8 @@ public class Gene implements Comparable<Gene>{
         return -1;
     }
 
-    public boolean checkAlreadyUsed(Gene g, int pos, int usedCityPos) {
-        boolean check;
+    public boolean checkAlreadyUsed(Gene g, int usedCityPos) {
+        //!checkAlreadyUsed(child, -1, posCity1))
         for (int i = 0; i < g.value.length; i++) {
             if (g.value[i] == usedCityPos) {
                 return true;
@@ -198,23 +198,26 @@ public class Gene implements Comparable<Gene>{
         return -1;
     }
     
-    public int getUnusedPosRandom(Gene g){
+    public int getUnusedPosRandom(Gene g, int pos){
         ArrayList<Integer> possibleValue = new ArrayList<Integer>();
         for (int i = 0; i < this.value.length; i++) {
             boolean check = false;
-            for (int j = 0; j < g.value.length; j++) {
+            for (int j = 0; j < pos; j++) {
                 if(i == g.value[j]){
                     check = true;
                     break;
-                }else{
-                    possibleValue.add(i);
                 }
             }
+            if (check == false) {
+                possibleValue.add(i);
+            }
         }
-        int result = possibleValue.get(getRandomInt(possibleValue.size()));
-//        System.out.println("result" + result);
+        int randomnumber = getRandomInt(possibleValue.size());
+        int result = possibleValue.get(randomnumber);
+
         return result;
     }
+    
     
     public int[] getValue(){
         return this.value;
