@@ -31,10 +31,10 @@ public class Run {
                 genome.greedyCrossover(this.pc);
                 if (genome.maxFitnessReached()) {break;}
                 
-//                genome.mutate(pm);
+                genome.mutate(pm);
                 if (genome.maxFitnessReached()) {break;}
                 
-//                genome.replicate50Best();
+                genome.replicate50Best();
                 
                 totalGeneration++;
             }

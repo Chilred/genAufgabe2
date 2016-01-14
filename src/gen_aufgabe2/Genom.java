@@ -19,7 +19,7 @@ public class Genom {
     private int genlen;
     private boolean best_protection;
     private Map map;
-    private Gene[] geneList;
+    public Gene[] geneList;
 
     public Genom(int gencnt, Map map) {
         this.gencnt = gencnt;
@@ -84,6 +84,7 @@ public class Genom {
             Gene gen1 = this.geneList[gen1Id];
             Gene gen2 = this.geneList[gen2Id];
             Gene child = gen1.greedyCrossover(gen2);
+            child.updateFitness();
 //            System.out.println(child.isValid());
             newGeneList[count] = child;
             count++;
@@ -142,6 +143,7 @@ public class Genom {
     
     public Gene getBestFitness(){
         this.updateFitness();
+        Arrays.sort(geneList);
         return this.geneList[geneList.length-1];
     }
     

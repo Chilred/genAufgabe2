@@ -5,6 +5,10 @@
  */
 package gen_aufgabe2;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -18,10 +22,10 @@ public class Gen_aufgabe2 {
     static int gencnt = 100;
     static int genlen = 36;
 
-    static double pc = 0.9;
+    static double pc = 0.0;
     static double pcEnd = 0.9;
     static double pcStep = 0.05;
-    static double pm = 0.005; // 0
+    static double pm = 0.000; // 0
     static double pmEnd = 0.2;
     static double pmStep = 0.005;
     static int max_generation = 1000; //1000
@@ -42,18 +46,30 @@ public class Gen_aufgabe2 {
 //        gene2.updateFitness();
 //        Gene child = gene1.greedyCrossover(gene2);
 //        child.updateFitness();
-
-        
+//        
+//       
+//        int pos = getRandomInt(genlen);
+//        int pos2 = getRandomInt(genlen);
+//        child.mutate(pos, pos2);
+//        System.out.println(child);
+//        
+////        genome.replicate50Best();
+//
+//        
 //        Genom genome = new Genom(gencnt, map);
 //        genome.setProtection(protection);
 //        genome.greedyCrossover(pc);
 //        genome.mutate(pm);
 //        genome.replicate50Best();
+//        
+//        for (int i = 0; i < genome.geneList.length; i++) {
+//            System.out.println(genome.geneList[i]);
+//        }
 
 //        Gene g = new Gene(genlen, map);
 //        Part1
-        startFirstRun(map);
-//        startFirstRunAll(map);
+//        startFirstRun(map);
+        startFirstRunAll(map);
 //        Part2
 //        Time calcute
         long endTime = System.currentTimeMillis();
@@ -78,7 +94,8 @@ public class Gen_aufgabe2 {
             }
             result = result + "\r\n";
         }
-        System.out.println(result);
+//        System.out.println(result);
+        writeInFile(result, "FirstRun.txt");
     }
 
 //    public static void approximationChecker(int maxRun, double pc, double pm, int gencnt, int genlen, int max_generation, boolean protection){
@@ -94,5 +111,26 @@ public class Gen_aufgabe2 {
 
     public static int getRandomInt(int value) {
         return ThreadLocalRandom.current().nextInt(value);
+    }
+    
+    public static void writeInFile(String result, String filename) {
+        try {
+            String content = result;
+
+            File file = new File("C:/Users/Chilred-pc/workspace/gen_aufgabe2/src/" + filename);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(content);
+            bw.close();
+
+            System.out.println("Done");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
