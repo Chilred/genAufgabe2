@@ -18,10 +18,10 @@ public class Gen_aufgabe2 {
     static int gencnt = 100;
     static int genlen = 36;
 
-    static double pc = 0.5;
+    static double pc = 0.9;
     static double pcEnd = 0.9;
     static double pcStep = 0.05;
-    static double pm = 0.0; // 0
+    static double pm = 0.005; // 0
     static double pmEnd = 0.2;
     static double pmStep = 0.005;
     static int max_generation = 1000; //1000
@@ -42,8 +42,8 @@ public class Gen_aufgabe2 {
 
 //        Gene g = new Gene(genlen, map);
 //        Part1
-//        startFirstRun(map);
-        startFirstRunAll(map);
+        startFirstRun(map);
+//        startFirstRunAll(map);
 //        Part2
 //        Time calcute
         long endTime = System.currentTimeMillis();

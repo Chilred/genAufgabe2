@@ -14,7 +14,7 @@ import java.util.Collections;
  *
  * @author Chilred-pc
  */
-public class Gene implements Comparable<Gene>{
+public class Gene implements Comparable<Gene> {
 
     public int[] value;
     private boolean protectGene = false;
@@ -58,7 +58,7 @@ public class Gene implements Comparable<Gene>{
             this.mutate(getRandomInt(this.genlen), getRandomInt(this.genlen));
         }
     }
-    
+
     //Mutate
     public void mutate(int pos, int pos2) {
         int temp = this.value[pos];
@@ -66,40 +66,17 @@ public class Gene implements Comparable<Gene>{
         this.value[pos2] = temp;
     }
 
-    public void greedyCrossover_theoretisch(Gene gene2) {
-        Gene child = new Gene(this.value.length, this.map);
-        child.value[0] = this.value[0];
-
-        this.printGene();
-        gene2.printGene();
-
-        int posCity1 = getPosOfCity(child.value[0], this.value);
-        int posCity2 = getPosOfCity(child.value[0], gene2.value);
-        System.out.println(posCity1);
-        System.out.println(posCity2);
-
-        int childPos = getPosOfCity(child.value[0], child.value);
-
-        double getDistance1 = this.map.getDistance(childPos, posCity1);
-        double getDistance2 = this.map.getDistance(childPos, posCity2);
-
-        System.out.println(getDistance1);
-        System.out.println(getDistance2);
-    }
-
     public Gene greddyCrossover(Gene gene2) {
         Gene child = new Gene(this.value.length, this.map);
         child.value[0] = this.value[0];
 
         for (int i = 1; i < this.value.length; i++) {
-            int currentPos = child.value[i-1];
-//            int posCity1 = getPosOfCity(currentPos, this.value);
-//            int posCity2 = getPosOfCity(currentPos, gene2.value);
+            int currentPos = child.value[i - 1];
             int posCity1 = this.getPosOfCity_new(currentPos);
             int posCity2 = gene2.getPosOfCity_new(currentPos);
             if (posCity1 != -1 && posCity2 != -1) {
-                double getDistance1 = this.map.getDistance(currentPos+1, posCity1+1);
-                double getDistance2 = this.map.getDistance(currentPos+1, posCity2+1);
+                double getDistance1 = this.map.getDistance(currentPos + 1, posCity1 + 1);
+                double getDistance2 = this.map.getDistance(currentPos + 1, posCity2 + 1);
 
                 if (getDistance1 < getDistance2) {
                     if (!checkAlreadyUsed(child, posCity1)) {
@@ -108,7 +85,7 @@ public class Gene implements Comparable<Gene>{
                         if (!checkAlreadyUsed(child, posCity2)) {
                             child.value[i] = posCity2;
                         } else {
-                            child.value[i] = getUnusedPosRandom(child, i-1);
+                            child.value[i] = getUnusedPosRandom(child, i - 1);
                         }
                     }
                 } else {
@@ -118,7 +95,7 @@ public class Gene implements Comparable<Gene>{
                         if (!checkAlreadyUsed(child, posCity1)) {
                             child.value[i] = posCity1;
                         } else {
-                            child.value[i] = getUnusedPosRandom(child, i-1);
+                            child.value[i] = getUnusedPosRandom(child, i - 1);
                         }
                     }
                 }
@@ -127,45 +104,28 @@ public class Gene implements Comparable<Gene>{
                     if (!checkAlreadyUsed(child, posCity1)) {
                         child.value[i] = posCity1;
                     } else {
-                        child.value[i] = getUnusedPosRandom(child, i-1);
+                        child.value[i] = getUnusedPosRandom(child, i - 1);
                     }
                 } else if (posCity2 != -1) {
                     if (!checkAlreadyUsed(child, posCity2)) {
                         child.value[i] = posCity2;
                     } else {
-                        child.value[i] = getUnusedPosRandom(child, i-1);
+                        child.value[i] = getUnusedPosRandom(child, i - 1);
                     }
                 } else {
-                    child.value[i] = getUnusedPosRandom(child, i-1);
+                    child.value[i] = getUnusedPosRandom(child, i - 1);
                 }
             }
         }
-
-//        for (int i = 0; i < child.value.length; i++) {
-//            System.out.print(this.value[i]+ " ");
-//            System.out.print(gene2.value[i]+ " ");
-//            System.out.print(child.value[i] + " ");
-//        }
         return child;
     }
 
-    public int getPosOfCity(int value, int[] cityValue) {
-        int pos = -1;
-        for (int i = 0; i < cityValue.length; i++) {
-            if (cityValue[i] == value) {
-                pos = i;
-                break;
+    public int getPosOfCity_new(int value) {
+        for (int i = 0; i < this.genlen - 1; i++) {
+            if (this.value[i] == value) {
+                return this.value[i + 1];
             }
         }
-        return pos+1;
-    }
-    
-    public int getPosOfCity_new(int value){
-        for (int i=0 ; i<this.genlen-1 ; i++) {
-			if (this.value[i] == value) {
-				return this.value[i+1];
-			}
-		}
         return -1;
     }
 
@@ -197,13 +157,13 @@ public class Gene implements Comparable<Gene>{
         }
         return -1;
     }
-    
-    public int getUnusedPosRandom(Gene g, int pos){
+
+    public int getUnusedPosRandom(Gene g, int pos) {
         ArrayList<Integer> possibleValue = new ArrayList<Integer>();
         for (int i = 0; i < this.value.length; i++) {
             boolean check = false;
             for (int j = 0; j < pos; j++) {
-                if(i == g.value[j]){
+                if (i == g.value[j]) {
                     check = true;
                     break;
                 }
@@ -217,9 +177,8 @@ public class Gene implements Comparable<Gene>{
 
         return result;
     }
-    
-    
-    public int[] getValue(){
+
+    public int[] getValue() {
         return this.value;
     }
 
@@ -240,4 +199,38 @@ public class Gene implements Comparable<Gene>{
         }
         return 0;
     }
+    
+    
+    //old
+//    public int getPosOfCity(int value, int[] cityValue) {
+//        int pos = -1;
+//        for (int i = 0; i < cityValue.length; i++) {
+//            if (cityValue[i] == value) {
+//                pos = i;
+//                break;
+//            }
+//        }
+//        return pos + 1;
+//    }
+    
+    //    public void greedyCrossover_theoretisch(Gene gene2) {
+//        Gene child = new Gene(this.value.length, this.map);
+//        child.value[0] = this.value[0];
+//
+//        this.printGene();
+//        gene2.printGene();
+//
+//        int posCity1 = getPosOfCity(child.value[0], this.value);
+//        int posCity2 = getPosOfCity(child.value[0], gene2.value);
+//        System.out.println(posCity1);
+//        System.out.println(posCity2);
+//
+//        int childPos = getPosOfCity(child.value[0], child.value);
+//
+//        double getDistance1 = this.map.getDistance(childPos, posCity1);
+//        double getDistance2 = this.map.getDistance(childPos, posCity2);
+//
+//        System.out.println(getDistance1);
+//        System.out.println(getDistance2);
+//    }
 }
