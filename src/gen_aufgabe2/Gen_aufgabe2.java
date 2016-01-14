@@ -25,7 +25,7 @@ public class Gen_aufgabe2 {
     static double pmEnd = 0.2;
     static double pmStep = 0.005;
     static int max_generation = 1000; //1000
-    static boolean protection = true;
+    static boolean protection = false;
     static int maxRun = 1; //50
 
     /**
@@ -34,6 +34,16 @@ public class Gen_aufgabe2 {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         Map map = new Map(path, filename);
+//        Gene gene1 = new Gene(36, map);
+//        gene1.fillFitness();
+//        gene1.updateFitness();
+//        Gene gene2 = new Gene(36, map);
+//        gene2.fillFitness();
+//        gene2.updateFitness();
+//        Gene child = gene1.greedyCrossover(gene2);
+//        child.updateFitness();
+
+        
 //        Genom genome = new Genom(gencnt, map);
 //        genome.setProtection(protection);
 //        genome.greedyCrossover(pc);

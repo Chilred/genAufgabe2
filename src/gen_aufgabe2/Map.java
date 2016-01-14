@@ -88,7 +88,7 @@ public class Map {
                 int diff1 = city1[1] - city2[1];
                 int diff2 = city1[2] - city2[2];
                 double res = Math.sqrt((diff1 * diff1) + (diff2 * diff2));
-                distance[city1[0]][city2[0]] = round(res, 2);
+                distance[city1[0]][city2[0]] = res;//round(res, 2);
             }
         }
         return distance;

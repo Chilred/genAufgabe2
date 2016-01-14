@@ -30,7 +30,7 @@ public class Genom {
         for (int i = 0; i < gencnt; i++) {
             this.geneList[i] = new Gene(this.genlen, map);
             this.geneList[i].fillFitness();
-            this.geneList[i].updateFitness();
+//            this.geneList[i].updateFitness();
 //            this.geneList[i].printGene();
         }
     }
@@ -77,13 +77,15 @@ public class Genom {
             int gen1Id = getRandomInt(this.geneList.length);
             int gen2Id = getRandomInt(this.geneList.length);
             if (this.best_protection) {
-                if (gen1Id == 0 || gen2Id == 0) {
+                if (gen1Id == geneList.length-1 || gen2Id == geneList.length-1) {
                     continue;
                 }
             }
             Gene gen1 = this.geneList[gen1Id];
             Gene gen2 = this.geneList[gen2Id];
-            newGeneList[count] = gen1.greddyCrossover(gen2);
+            Gene child = gen1.greedyCrossover(gen2);
+//            System.out.println(child.isValid());
+            newGeneList[count] = child;
             count++;
         }
         
