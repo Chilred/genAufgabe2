@@ -40,15 +40,20 @@ public class Genom {
     }
 
     public void mutate(double pm) {
-//        Arrays.sort(geneList);
+//    static int gencnt = 100;
+//    static int genlen = 36;
+        
+        updateFitness();
+        Arrays.sort(geneList);
         double end = genlen * gencnt * pm;
         for (int i = 0; i < end; i++) {
-            int geneId = getRandomInt(genlen);
+            int geneId = getRandomInt(gencnt);
             if (this.best_protection && geneId == this.geneList.length-1) {
                 continue;
             }
             int pos = getRandomInt(genlen);
-            geneList[geneId].mutate(geneId, pos);
+            int pos2 = getRandomInt(genlen);
+            geneList[geneId].mutate(pos, pos2);
         }
     }
     
@@ -63,7 +68,6 @@ public class Genom {
             updateFitness();
             Arrays.sort(geneList);
             Gene newGene = new Gene(this.genlen, map);
-            //todo check ob richtig oder -1
             System.arraycopy(this.geneList[geneList.length-1].value, 0, newGene.getValue(), 0, this.genlen);
             newGeneList[count] = newGene;
             count++;
@@ -148,7 +152,8 @@ public class Genom {
     public boolean maxFitnessReached(){
         boolean reached = false;
         for (int i = 0; i < this.geneList.length; i++) {
-            geneList[i].updateFitness();
+//            geneList[i].updateFitness();
+//            System.out.println(this.geneList[i].getFitness());
             if (this.geneList[i].getFitness() == this.genlen) {
                 reached = true;
                 break;

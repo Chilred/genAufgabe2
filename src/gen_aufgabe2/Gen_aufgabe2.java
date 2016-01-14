@@ -12,73 +12,73 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Chilred-pc
  */
 public class Gen_aufgabe2 {
+
     static String path = "src/map/";
     static String filename = "05-map-10x10-36border.txt";
     static int gencnt = 100;
     static int genlen = 36;
 
-    static double pc = 0;
+    static double pc = 0.5;
     static double pcEnd = 0.9;
     static double pcStep = 0.05;
-    static double pm = 0.5; // 0
+    static double pm = 0.0; // 0
     static double pmEnd = 0.2;
     static double pmStep = 0.005;
-    static int max_generation = 100; //1000
-    static boolean protection = false;
+    static int max_generation = 1000; //1000
+    static boolean protection = true;
     static int maxRun = 1; //50
-        
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//
-//        Map map = new Map(path, filename);
+        long startTime = System.currentTimeMillis();
+        Map map = new Map(path, filename);
 //        Genom genome = new Genom(gencnt, map);
 //        genome.setProtection(protection);
 //        genome.greedyCrossover(pc);
 //        genome.mutate(pm);
 //        genome.replicate50Best();
 
-        long startTime = System.currentTimeMillis();
+//        Gene g = new Gene(genlen, map);
 //        Part1
-//        Map map = new Map(path,filename);
-//        startFirstRun();
-//        startFirstRunAll();
-        
+//        startFirstRun(map);
+        startFirstRunAll(map);
 //        Part2
-        
 //        Time calcute
         long endTime = System.currentTimeMillis();
-        long totalTime = endTime - startTime;    
+        long totalTime = endTime - startTime;
+        System.out.println("totalTime: " + totalTime + " ms");
     }
-    
-    public static void startFirstRun(){
+
+    public static void startFirstRun(Map map) {
         String result = "";
-         Run run = new Run(maxRun, pc, pm, gencnt, genlen, max_generation, protection);
-         result = result + run.getAverageGeneration();
+        Run run = new Run(maxRun, pc, pm, gencnt, genlen, max_generation, protection, map);
+        result = result + run.getAverageGeneration();
 //         System.out.println(run.getAverGenDouble());
     }
-    
-     public static void startFirstRunAll(){
-         String result = "";
-         for (double i = pc; i < pcEnd; i += pcStep) {
-             for (double j = pm; j < pmEnd; j += pmStep) {
-                 Run run = new Run(maxRun, i, j, gencnt, genlen, max_generation, protection);
-                 result = result + run.getAverageGeneration();
-             }
-             result = result + "\r\n";
-         }
-     }
-    
-    public static void approximationChecker(int maxRun, double pc, double pm, int gencnt, int genlen, int max_generation, boolean protection){
-        Run run = new Run(maxRun, pc, pm, gencnt, genlen, max_generation, protection);
-        String result = run.getAverageGeneration();
-        
-        TSPApproximationChecker tspAC = new TSPApproximationChecker();
-        
+
+    public static void startFirstRunAll(Map map) {
+        String result = "";
+        for (double i = pc; i < pcEnd; i += pcStep) {
+            for (double j = pm; j < pmEnd; j += pmStep) {
+                Run run = new Run(maxRun, i, j, gencnt, genlen, max_generation, protection, map);
+                result = result + run.getAverageGeneration();
+//                 System.out.println(result);
+            }
+            result = result + "\r\n";
+        }
+        System.out.println(result);
     }
-    
-     public static double getRandomDouble() {
+
+//    public static void approximationChecker(int maxRun, double pc, double pm, int gencnt, int genlen, int max_generation, boolean protection){
+//        Run run = new Run(maxRun, pc, pm, gencnt, genlen, max_generation, protection, map);
+//        String result = run.getAverageGeneration();
+//        
+//        TSPApproximationChecker tspAC = new TSPApproximationChecker();
+//        
+//    }
+    public static double getRandomDouble() {
         return ThreadLocalRandom.current().nextDouble(1);
     }
 

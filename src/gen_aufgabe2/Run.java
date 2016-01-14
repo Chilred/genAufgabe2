@@ -16,10 +16,11 @@ public class Run {
     private double pm;
     private double averageGeneration;   
     
-    public Run(int maxRun, double pc, double pm, int gencnt, int genlen, int max_generation, boolean protection){
+    public Run(int maxRun, double pc, double pm, int gencnt, int genlen, int max_generation, boolean protection, Map map){
         this.maxRun = maxRun;
         this.pc = pc;
         this.pm = pm;
+        this.map = map;
 
         int totalGeneration = 0;
         for (int running = 0; running < maxRun; running++) {
