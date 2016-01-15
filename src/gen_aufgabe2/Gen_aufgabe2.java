@@ -18,7 +18,9 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Gen_aufgabe2 {
 
     static String path = "src/map/";
-    static String filename = "05-map-10x10-36border.txt";
+//    static String filename = "05-map-10x10-36border.txt";
+    static String filename = "06-map-100x100-50.txt";
+    
     static int gencnt = 100;
     static int genlen = 36;
 
@@ -32,7 +34,6 @@ public class Gen_aufgabe2 {
     static boolean protection = true;
     static int maxRun = 50; //50
     static double fitMax = 36;
-    static boolean knownFitness = false;
 //    static String replication = "NONE";
     static String replication = "replicate50Best";
     /**
@@ -114,12 +115,15 @@ public class Gen_aufgabe2 {
     }
 
     public static void approximationChecker(Map map, double pc, double pm){
-        
-//        String result = run.getAverageGeneration();
-        double result = run.getAverGenDouble();
-        //TSPApproximationChecker tspAC = new TSPApproximationChecker();
-        
+        RunApproximate ra = new RunApproximate(maxRun, pc, pm, gencnt, max_generation, protection, map, replication);
+        String result = "";
+         for (int i = 0; i < maxRun; i++) {
+            ra.distanceApproximated();
+            result = ra.getBestFitness() + "\r\n";
+        }
+         System.out.println(result);
     }
+    
     public static double getRandomDouble() {
         return ThreadLocalRandom.current().nextDouble(1);
     }

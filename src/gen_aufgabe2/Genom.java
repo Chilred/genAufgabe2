@@ -149,9 +149,9 @@ public class Genom {
         return reached;
     }
     
-     public double getBestFitness(){
+     public String getBestFitness(){
         this.updateFitnessGenome();
         Arrays.sort(geneList);
-        return this.geneList[0].getFitness();
+        return String.valueOf(this.geneList[0].getFitness());
     }
 }

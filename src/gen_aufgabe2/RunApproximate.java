@@ -19,12 +19,11 @@ public class RunApproximate {
     private double fitMax;
     private String replication;
     private int gencnt;
-    private int genlen;
     private boolean protection;
     private int maxGeneration;
-    private double bestFitness;
+    private String bestFitness;
 
-    public RunApproximate(int maxRun, double pc, double pm, int gencnt, int genlen, int maxGeneration, boolean protection, Map map, String replication) {
+    public RunApproximate(int maxRun, double pc, double pm, int gencnt, int maxGeneration, boolean protection, Map map, String replication) {
         this.maxRun = maxRun;
         this.pc = pc;
         this.pm = pm;
@@ -33,7 +32,8 @@ public class RunApproximate {
         this.replication = replication;
         this.protection = protection;
         this.maxGeneration = maxGeneration;
-        this.bestFitness = -1;
+        this.bestFitness = "-1";
+        this.gencnt = gencnt;
     }
 
     public void distanceApproximated() {
@@ -49,7 +49,7 @@ public class RunApproximate {
         bestFitness = genome.getBestFitness();
     }
     
-    public double getBestFitness(){
+    public String getBestFitness(){
         return this.bestFitness;
     }
 
