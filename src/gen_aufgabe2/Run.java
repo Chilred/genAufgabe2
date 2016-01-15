@@ -15,12 +15,14 @@ public class Run {
     private double pc;
     private double pm;
     private double averageGeneration;   
+    private int fitMax;
     
-    public Run(int maxRun, double pc, double pm, int gencnt, int genlen, int max_generation, boolean protection, Map map){
+    public Run(int maxRun, double pc, double pm, int gencnt, int genlen, int max_generation, boolean protection, Map map, int fitMax, String replication){
         this.maxRun = maxRun;
         this.pc = pc;
         this.pm = pm;
         this.map = map;
+        this.fitMax = fitMax;
 
         int totalGeneration = 0;
         for (int running = 0; running < maxRun; running++) {
@@ -29,12 +31,14 @@ public class Run {
 
             for (int generationCounter = 0; generationCounter < max_generation; generationCounter++) {
                 genome.greedyCrossover(this.pc);
-                if (genome.maxFitnessReached()) {break;}
+                if (genome.maxFitnessReached(fitMax)) {break;}
                 
                 genome.mutate(pm);
-                if (genome.maxFitnessReached()) {break;}
+                if (genome.maxFitnessReached(fitMax)) {break;}
+                if(replication.equals("replicate50Best")){
+                    genome.replicate50Best();
+                }
                 
-                genome.replicate50Best();
                 
                 totalGeneration++;
             }

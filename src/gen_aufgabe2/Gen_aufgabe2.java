@@ -22,16 +22,18 @@ public class Gen_aufgabe2 {
     static int gencnt = 100;
     static int genlen = 36;
 
-    static double pc = 0.0;
+    static double pc = 0.95;
     static double pcEnd = 0.9;
     static double pcStep = 0.05;
-    static double pm = 0.000; // 0
+    static double pm = 0.005; // 0
     static double pmEnd = 0.2;
     static double pmStep = 0.005;
-    static int max_generation = 1000; //1000
-    static boolean protection = false;
-    static int maxRun = 1; //50
-
+    static int max_generation = 2000; //2000
+    static boolean protection = true;
+    static int maxRun = 10; //50
+    static int fitMax = 36;
+//    static String replication = "NONE";
+    static String replication = "replicate50Best";
     /**
      * @param args the command line arguments
      */
@@ -41,26 +43,32 @@ public class Gen_aufgabe2 {
 //        Gene gene1 = new Gene(36, map);
 //        gene1.fillFitness();
 //        gene1.updateFitness();
+//        System.out.println(gene1);
 //        Gene gene2 = new Gene(36, map);
 //        gene2.fillFitness();
 //        gene2.updateFitness();
 //        Gene child = gene1.greedyCrossover(gene2);
 //        child.updateFitness();
-//        
-//       
+//        System.out.println(child);
+//
 //        int pos = getRandomInt(genlen);
 //        int pos2 = getRandomInt(genlen);
+//        System.out.println("pos1 " + pos);
+//        System.out.println("pos2 " + pos2);
 //        child.mutate(pos, pos2);
+//        child.updateFitness();
 //        System.out.println(child);
 //        
-////        genome.replicate50Best();
 //
 //        
 //        Genom genome = new Genom(gencnt, map);
 //        genome.setProtection(protection);
 //        genome.greedyCrossover(pc);
+//        if (genome.maxFitnessReached(fitMax)) {System.out.println("1");}
 //        genome.mutate(pm);
+//        if (genome.maxFitnessReached(fitMax)) {System.out.println("2");}
 //        genome.replicate50Best();
+//        if (genome.maxFitnessReached(fitMax)) {System.out.println("3");}
 //        
 //        for (int i = 0; i < genome.geneList.length; i++) {
 //            System.out.println(genome.geneList[i]);
@@ -68,8 +76,8 @@ public class Gen_aufgabe2 {
 
 //        Gene g = new Gene(genlen, map);
 //        Part1
-//        startFirstRun(map);
-        startFirstRunAll(map);
+        startFirstRun(map);
+//        startFirstRunAll(map);
 //        Part2
 //        Time calcute
         long endTime = System.currentTimeMillis();
@@ -79,7 +87,7 @@ public class Gen_aufgabe2 {
 
     public static void startFirstRun(Map map) {
         String result = "";
-        Run run = new Run(maxRun, pc, pm, gencnt, genlen, max_generation, protection, map);
+        Run run = new Run(maxRun, pc, pm, gencnt, genlen, max_generation, protection, map, fitMax, replication);
         result = result + run.getAverageGeneration();
 //         System.out.println(run.getAverGenDouble());
     }
@@ -88,7 +96,7 @@ public class Gen_aufgabe2 {
         String result = "";
         for (double i = pc; i < pcEnd; i += pcStep) {
             for (double j = pm; j < pmEnd; j += pmStep) {
-                Run run = new Run(maxRun, i, j, gencnt, genlen, max_generation, protection, map);
+                Run run = new Run(maxRun, i, j, gencnt, genlen, max_generation, protection, map, fitMax, replication);
                 result = result + run.getAverageGeneration();
 //                 System.out.println(result);
             }
