@@ -195,10 +195,6 @@ public class Gene implements Comparable<Gene> {
         return unused[getRandomInt(unused.length)];
     }
 
-    public int[] getValue() {
-        return this.value;
-    }
-
     public void printGene() {
         for (int i = 0; i < this.value.length; i++) {
             System.out.print(this.value[i] + " ");

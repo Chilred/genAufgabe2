@@ -15,9 +15,9 @@ public class Run {
     private double pc;
     private double pm;
     private double averageGeneration;   
-    private int fitMax;
+    private double fitMax;
     
-    public Run(int maxRun, double pc, double pm, int gencnt, int genlen, int max_generation, boolean protection, Map map, int fitMax, String replication){
+    public Run(int maxRun, double pc, double pm, int gencnt, int genlen, int max_generation, boolean protection, Map map, double fitMax, String replication){
         this.maxRun = maxRun;
         this.pc = pc;
         this.pm = pm;
@@ -38,8 +38,7 @@ public class Run {
                 if(replication.equals("replicate50Best")){
                     genome.replicate50Best();
                 }
-                
-                
+
                 totalGeneration++;
             }
         }
