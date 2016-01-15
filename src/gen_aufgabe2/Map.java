@@ -24,6 +24,7 @@ import java.util.ArrayList;
 public class Map {
     private double[][] distanceArray;
     private ArrayList<int[]> citys;
+    private int gridsize = 0;
     
     public Map(String path, String filename) {
         citys = readFile(path, filename);
@@ -58,6 +59,7 @@ public class Map {
                 }
                 y++;
             }
+            gridsize = y;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -107,12 +109,16 @@ public class Map {
         }      
     }
     
+    public int getGridSize(){
+        return this.gridsize;
+    }
+    
     public int getCountOfCities(){
-        return distanceArray.length-1;
+        return this.distanceArray.length-1;
     }
     
     public double getDistance(int pos, int end) {
-        return distanceArray[pos][end];
+        return this.distanceArray[pos][end];
     }
 
     public static double round(double value, int places) {
