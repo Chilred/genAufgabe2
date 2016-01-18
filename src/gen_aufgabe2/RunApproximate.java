@@ -49,8 +49,12 @@ public class RunApproximate {
         bestFitness = genome.getBestFitness();
     }
     
-    public String getBestFitness(){
-        return this.bestFitness;
+    public Double getBestFitness(){
+        return Double.valueOf(this.bestFitness);
+    }
+    
+    public String getDistanceApproximated(){
+        return String.valueOf(this.fitMax);
     }
 
     public double getFitnessFromMap() {

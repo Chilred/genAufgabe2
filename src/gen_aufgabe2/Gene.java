@@ -236,7 +236,7 @@ public class Gene implements Comparable<Gene> {
 	}
     
     
-    //old
+    //old stuff
 //    public int getPosOfCity(int value, int[] cityValue) {
 //        int pos = -1;
 //        for (int i = 0; i < cityValue.length; i++) {

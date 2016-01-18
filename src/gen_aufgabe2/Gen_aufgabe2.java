@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -18,21 +19,22 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Gen_aufgabe2 {
 
     static String path = "src/map/";
-    static String filename = "05-map-10x10-36border.txt";
-//    static String filename = "06-map-100x100-50.txt";
+//    static String filename = "05-map-10x10-36border.txt";
+//    static String filename = "05-map-10x10-36-dist42.64.txt";
+    static String filename = "06-map-100x100-200.txt";
 
     static int gencnt = 100;
     static int genlen = 36;
 
-    static double pc = 0.0;
+    static double pc = 0.9;
     static double pcEnd = 0.9;
     static double pcStep = 0.05;
     static double pm = 0.000; // 0
     static double pmEnd = 0.2;
     static double pmStep = 0.005;
     static int max_generation = 2000; //2000
-    static boolean protection = false;
-    static int maxRun = 50; //50
+    static boolean protection = true;
+    static int maxRun = 100; //50
     static double fitMax = 36;
     static String replication = "NONE";
 //    static String replication = "replicate50Best";
@@ -41,52 +43,17 @@ public class Gen_aufgabe2 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        long startTime = System.currentTimeMillis();
         Map map = new Map(path, filename);
-//        Gene gene1 = new Gene(36, map);
-//        gene1.fillFitness();
-//        gene1.updateFitness();
-//        System.out.println(gene1);
-//        Gene gene2 = new Gene(36, map);
-//        gene2.fillFitness();
-//        gene2.updateFitness();
-//        Gene child = gene1.greedyCrossover(gene2);
-//        child.updateFitness();
-//        System.out.println(child);
-//
-//        int pos = getRandomInt(genlen);
-//        int pos2 = getRandomInt(genlen);
-//        System.out.println("pos1 " + pos);
-//        System.out.println("pos2 " + pos2);
-//        child.mutate(pos, pos2);
-//        child.updateFitness();
-//        System.out.println(child);
-//        
-//
-//        
-//        Genom genome = new Genom(gencnt, map);
-//        genome.setProtection(protection);
-//        genome.greedyCrossover(pc);
-//        if (genome.maxFitnessReached(fitMax)) {System.out.println("1");}
-//        genome.mutate(pm);
-//        if (genome.maxFitnessReached(fitMax)) {System.out.println("2");}
-//        genome.replicate50Best();
-//        if (genome.maxFitnessReached(fitMax)) {System.out.println("3");}
-//        
-//        for (int i = 0; i < genome.geneList.length; i++) {
-//            System.out.println(genome.geneList[i]);
-//        }
 
-//        Gene g = new Gene(genlen, map);
 //        Part1
 //        startFirstRun(map);
-        startFirstRunAll(map);
+//        startFirstRunAll(map);
 //        Part2
 //        Time calcute
-//        double bestPc = pc;
-//        double bestPm = pm;
+        double bestPc = 0.85;
+        double bestPm = 0.01;
 //        
-//       approximationChecker(map, bestPc, bestPm);
+       approximationChecker(map, bestPc, bestPm);
 
 //        long endTime = System.currentTimeMillis();
 //        long totalTime = endTime - startTime;
@@ -97,42 +64,49 @@ public class Gen_aufgabe2 {
         String result = "";
         Run run = new Run(maxRun, pc, pm, gencnt, genlen, max_generation, protection, map, fitMax, replication);
         result = result + run.getAverageGeneration();
-//         System.out.println(run.getAverGenDouble());
+         System.out.println(run.getAverGenDouble());
     }
 
     public static void startFirstRunAll(Map map) {
         long startTime = System.currentTimeMillis();
         String result = "";
-        for (double i = pc; i < pcEnd; i += pcStep) {
+        for (double i = pc; i <= pcEnd; i += pcStep) {
             for (double j = pm; j < pmEnd; j += pmStep) {
                 Run run = new Run(maxRun, i, j, gencnt, genlen, max_generation, protection, map, fitMax, replication);
                 result = result + run.getAverageGeneration();
-//                 System.out.println(result);
             }
             result = result + "\r\n";
         }
-//        System.out.println(result);
+               
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         result = result + "\r\n" + "# Gesamtzeit" + totalTime + " ms";
-        writeInFile(result, "FirstRun.txt");
+        writeInFile(result, "5Run_last.txt");
     }
 
     public static void approximationChecker(Map map, double pc, double pm) {
         long startTime = System.currentTimeMillis();
 
         RunApproximate ra = new RunApproximate(maxRun, pc, pm, gencnt, max_generation, protection, map, replication);
-        String result = "";
+        Double result[] = new Double[100];
         for (int i = 0; i < maxRun; i++) {
+            String currentResult = "";
             ra.distanceApproximated();
-            result = ra.getBestFitness() + "\r\n";
+            currentResult = i + " " + ra.getBestFitness();
+            result[i] = ra.getBestFitness();
+            System.out.println(currentResult);
         }
-        System.out.println(result);
-
+        Arrays.sort(result);
+        String sResult = "";
+        for (int i = 0; i < result.length; i++) {
+            sResult = sResult + i + " " + result[i] + "\r\n";
+        }
+        
+        
         long endTime = System.currentTimeMillis();
         long totalTime = endTime - startTime;
-        result = result + "\r\n" + "# Gesamtzeit" + totalTime + " ms";
-        writeInFile(result, "approximationChecker.txt");
+        sResult = sResult + "\r\n" + "# Gesamtzeit " + totalTime + " ms";
+        writeInFile(sResult, "approximationChecker_50.txt");
     }
 
     public static double getRandomDouble() {
